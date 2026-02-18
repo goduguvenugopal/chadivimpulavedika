@@ -1,18 +1,13 @@
-import { useState } from 'react'
- 
-import './App.css'
-import Navbar from './components/ui/Navbar'
+import "./App.css";
+import AppToastContainer from "./utils/AppToastContainer";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function App({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div>
-      <Navbar/>
-    </div>
+      {children}
+      <AppToastContainer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
