@@ -1,26 +1,23 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { getRedirectPath } from "../utils/getRedirectPath";
+import Loader from "../components/common/Loader";
 
 interface Props {
   allowedRoles?: string[];
   requireApproved?: boolean;
 }
 
-const ProtectedRoute = ({
-  allowedRoles,
-  requireApproved = true,
-}: Props) => {
+const ProtectedRoute = ({ allowedRoles, requireApproved = true }: Props) => {
   const { user, loading } = useAuth();
 
-if (loading) {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      Loading...
-    </div>
-  );
-}
-
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
   if (!user) return <Navigate to="/login" replace />;
 

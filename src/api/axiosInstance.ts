@@ -1,7 +1,8 @@
 import axios from "axios";
+import env from "../config/env";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: env.API_URL,
   withCredentials: true, // IMPORTANT for HttpOnly cookies
 });
 

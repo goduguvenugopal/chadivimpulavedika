@@ -11,7 +11,14 @@ import { toast } from "react-toastify";
 interface AuthUser {
   role: string;
   permissions: string;
-  marriageId: string;
+  marriageName: string;
+  adminMobileNumber: string;
+  location: string;
+  marriageDate: string;
+  upiId: string;
+  upiPayeeName: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthContextType {
@@ -30,7 +37,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const fetchMe = async () => {
     try {
       const res = await getMeApi();
-      setUser(res.data);
+
+      setUser(res.data?.data);
     } catch (error: any) {
       setUser(null);
 

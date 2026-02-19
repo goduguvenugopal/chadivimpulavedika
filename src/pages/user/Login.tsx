@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
 import Loader from "../../components/common/Loader";
+import ButtonLoader from "../../components/common/ButtonLoader";
+import { getRedirectPath } from "../../utils/getRedirectPath";
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [mobile, setMobile] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate(getRedirectPath(user), { replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,11 +23,18 @@ const Login = () => {
     try {
       setLoading(true);
       await login(mobile);
-      navigate("/");
     } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -42,9 +57,9 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-rose-500 text-white py-2 rounded-lg"
+            className="w-full bg-rose-500 text-white rounded-lg flex items-center justify-center h-[42px]"
           >
-            {loading ? <Loader /> : "Login"}
+            {loading ? <ButtonLoader /> : "Login"}
           </button>
         </form>
 

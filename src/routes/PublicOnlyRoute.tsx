@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { getRedirectPath } from "../utils/getRedirectPath";
+import Loader from "../components/common/Loader";
 
 const PublicOnlyRoute = () => {
   const { user, loading } = useAuth();
@@ -8,7 +9,7 @@ const PublicOnlyRoute = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+    <Loader/>
       </div>
     );
   }

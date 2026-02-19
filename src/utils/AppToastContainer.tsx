@@ -1,20 +1,21 @@
 import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppToastContainer = () => {
   return (
     <ToastContainer
       position="top-right"
-      autoClose={4000}
-      limit={5}
-      hideProgressBar={false}
+      autoClose={3000}
+      limit={3}
+      hideProgressBar
       newestOnTop
       closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
       pauseOnHover
-      theme="light" // "light" | "dark" | "colored"
+      draggable={false}
+      theme="colored"
       transition={Slide}
+      toastClassName="!rounded-xl !shadow-lg !text-sm"
+      bodyClassName="!px-4 !py-3"
     />
   );
 };

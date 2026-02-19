@@ -1,16 +1,29 @@
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Loader from "../components/common/Loader";
+import env from "../config/env";
 
 const StatusPage = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
 
+  const supportEmail = env.SUPPORT_EMAIL;
+  const supportPhone = env.SUPPORT_PHONE;
+
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
   if (!user) return null;
 
@@ -18,11 +31,12 @@ const StatusPage = () => {
   const isRejected = user.permissions === "rejected";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="max-w-md w-full bg-white shadow-xl rounded-2xl p-8 text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 px-4">
+      <div className="max-w-md w-full bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-8 text-center border border-white/40">
+
         {/* Status Icon */}
         <div
-          className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 
+          className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-md
           ${isPending ? "bg-yellow-100" : "bg-red-100"}`}
         >
           <span
@@ -41,25 +55,46 @@ const StatusPage = () => {
         {/* Message */}
         <p className="text-gray-600 mb-6">
           {isPending
-            ? "Your marriage registration is currently under review. Please wait until an administrator approves your request."
-            : "Your marriage registration has been rejected by the administrator. Please contact support or re-register if needed."}
+            ? "Your marriage registration is currently under review. Our admin team will verify and approve it shortly."
+            : "Your marriage registration was rejected. Please contact support for clarification or register again."}
         </p>
 
-        {/* Marriage ID (optional display) */}
-        <div className="bg-gray-50 border rounded-lg p-3 mb-6">
-          <p className="text-sm text-gray-500">Marriage ID</p>
-          <p className="font-medium text-gray-700">{user.marriageId}</p>
+        {/* Contact Section */}
+        <div className="bg-rose-50 border border-rose-100 rounded-xl p-4 mb-6 text-left">
+          <h4 className="font-semibold text-rose-600 mb-2 text-center">
+            Contact Support
+          </h4>
+
+          <div className="space-y-1 text-sm text-gray-700">
+            <p>
+              📧 Email:{" "}
+              <a
+                href={`mailto:${supportEmail}`}
+                className="text-rose-600 hover:underline"
+              >
+                {supportEmail}
+              </a>
+            </p>
+
+            <p>
+              📞 Phone:{" "}
+              <a
+                href={`tel:${supportPhone}`}
+                className="text-rose-600 hover:underline"
+              >
+                {supportPhone}
+              </a>
+            </p>
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex gap-3">
-          <button
-            onClick={logout}
-            className="flex-1 bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition"
-          >
-            Logout
-          </button>
-        </div>
+        {/* Logout Button */}
+        <button
+          onClick={logout}
+          className="w-full bg-gray-800 text-white py-2.5 rounded-xl hover:bg-gray-900 transition"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
