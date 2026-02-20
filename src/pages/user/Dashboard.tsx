@@ -21,7 +21,7 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const data: any = await getDashboardStatsApi();
-        setStats(data.data);  
+        setStats(data.data.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -49,7 +49,7 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
 
         <button
-          onClick={() => navigate("/visitors/add")}
+          onClick={() => navigate("/dashboard/visitors/add")}
           className="bg-rose-500 hover:bg-rose-600 text-white px-5 py-2 rounded-xl shadow-md transition text-nowrap"
         >
           + Add Visitor
@@ -60,7 +60,7 @@ const Dashboard = () => {
       <div className="grid md:grid-cols-3 gap-6">
         <StatCard
           title="Total Amount"
-          value={`₹ ${stats.totalAmount}`}
+          value={`₹ ${(stats.totalAmount ?? 0).toLocaleString()}`}
         />
 
         <StatCard

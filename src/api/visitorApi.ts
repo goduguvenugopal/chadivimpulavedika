@@ -5,3 +5,7 @@ export const getVisitorsApi = (page: number, limit: number) =>
 
 export const getPrintVisitorsApi = () =>
   axiosInstance.get("/api/marriage/visitors/export");
+
+
+export const addVisitorApi = (data:any) =>
+  axiosInstance.post("/api/marriage/visitors" , data);

@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FiMenu, FiX, FiLogOut, FiUser, FiChevronRight } from "react-icons/fi";
-import { MdDashboard, MdGroups, MdFavorite } from "react-icons/md";
+import {
+  MdDashboard,
+  MdGroups,
+  MdFavorite,
+  MdPersonAddAlt1,
+} from "react-icons/md";
 import { FaPrint } from "react-icons/fa";
 import { useAuth } from "../../context/AuthProvider";
 
@@ -21,10 +26,36 @@ const Navbar = () => {
   const isApproved = user?.permissions === "approved";
 
   const navItems: NavItem[] = [
-    { label: "Dashboard", icon: MdDashboard, path: "/dashboard", roles: ["user"] },
-    { label: "Visitors", icon: MdGroups, path: "/dashboard/visitors", roles: ["user"] },
-    { label: "Print", icon: FaPrint, path: "/dashboard/print", roles: ["user"] },
-    { label: "Marriages", icon: MdFavorite, path: "/admin/marriages", roles: ["admin"] },
+    {
+      label: "Dashboard",
+      icon: MdDashboard,
+      path: "/dashboard",
+      roles: ["user"],
+    },
+    {
+      label: "Add Visitors",
+      icon: MdPersonAddAlt1,
+      path: "/dashboard/visitors/add",
+      roles: ["user"],
+    },
+    {
+      label: "Visitors",
+      icon: MdGroups,
+      path: "/dashboard/visitors",
+      roles: ["user"],
+    },
+    {
+      label: "Print",
+      icon: FaPrint,
+      path: "/dashboard/print",
+      roles: ["user"],
+    },
+    {
+      label: "Marriages",
+      icon: MdFavorite,
+      path: "/admin/marriages",
+      roles: ["admin"],
+    },
     {
       label: "Profile",
       icon: FiUser,
@@ -35,9 +66,7 @@ const Navbar = () => {
 
   const visibleItems = navItems.filter(
     (item) =>
-      user &&
-      isApproved &&
-      item.roles.includes(user.role as "user" | "admin")
+      user && isApproved && item.roles.includes(user.role as "user" | "admin"),
   );
 
   const handleNavigate = (path: string) => {
@@ -56,8 +85,7 @@ const Navbar = () => {
   return (
     <>
       {/* TOP NAVBAR */}
-      <nav className="bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 text-white px-6 h-[68px] flex justify-between items-center shadow-lg top-0 left-0 sticky">
-
+      <nav className="bg-gradient-to-r from-rose-500 via-pink-500 z-10 to-amber-400 text-white px-6 h-[68px] flex justify-between items-center shadow-lg top-0 left-0 sticky">
         {/* LOGO */}
         <div
           onClick={() => navigate("/")}

@@ -1,4 +1,4 @@
-import type { SubmitEventHandler } from "react";
+
 import ButtonLoader from "../common/ButtonLoader";
 import InputField from "../ui/InputField";
 
