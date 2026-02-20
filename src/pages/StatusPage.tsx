@@ -28,12 +28,14 @@ const StatusPage = () => {
   if (!user) return null;
 
   const isPending = user.permissions === "pending";
-  const isRejected = user.permissions === "rejected";
+  const isApproved = user.permissions === "approved";
+  {
+    isApproved && navigate("/dashboard");
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 px-4 bg-[url('/bg-image.png')] bg-cover bg-center bg-no-repeat">
       <div className="max-w-md w-full bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-8 text-center border border-white/40">
-
         {/* Status Icon */}
         <div
           className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-md

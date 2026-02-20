@@ -56,7 +56,7 @@ const Navbar = () => {
   return (
     <>
       {/* TOP NAVBAR */}
-      <nav className="bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 text-white px-6 h-[68px] flex justify-between items-center shadow-lg">
+      <nav className="bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 text-white px-6 h-[68px] flex justify-between items-center shadow-lg top-0 left-0 sticky">
 
         {/* LOGO */}
         <div
@@ -108,7 +108,7 @@ const Navbar = () => {
                 {user?.marriageName || "Marriage Panel"}
               </h3>
               <p className="text-xs text-gray-500 capitalize">
-                {user?.role}
+                {user?.marriageDate}
               </p>
             </div>
             <button onClick={() => setIsOpen(false)}>
