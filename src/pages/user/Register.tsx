@@ -1,4 +1,4 @@
-import { useState, type SubmitEventHandler } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { registerApi } from "../../api/authApi";
 import { toast } from "react-toastify";
