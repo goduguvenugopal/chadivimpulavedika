@@ -82,7 +82,15 @@ const VisitorForm = ({
 
       await onSubmit(formData);
 
-      toast.success("Visitor added successfully");
+      toast.success(
+        isEdit ? "Visitor updated successfully" : "Visitor added successfully",
+      );
+
+      setShowUpiModal(false);
+
+      if (!isEdit) {
+        setFormData(initialFormState);
+      }
 
       setFormData(initialFormState);
     } catch (error: any) {
@@ -103,7 +111,15 @@ const VisitorForm = ({
 
       await onSubmit({ ...formData, paymentMode: "UPI" });
 
-      toast.success("Visitor Added Successfully");
+      toast.success(
+        isEdit ? "Visitor updated successfully" : "Visitor added successfully",
+      );
+
+      setShowUpiModal(false);
+
+      if (!isEdit) {
+        setFormData(initialFormState);
+      }
 
       setShowUpiModal(false);
       setFormData(initialFormState);

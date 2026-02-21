@@ -10,3 +10,9 @@ export const getPrintVisitorsApi = () =>
 
 export const addVisitorApi = (data: any) =>
   axiosInstance.post("/api/marriage/visitors", data);
+
+export const deleteVisitorApi = (id: string) =>
+  axiosInstance.delete(`/api/marriage/visitors/${id}`);
+
+export const updateVisitorApi = (id: string, data: any) =>
+  axiosInstance.put(`/api/marriage/visitors/update/${id}`, data);

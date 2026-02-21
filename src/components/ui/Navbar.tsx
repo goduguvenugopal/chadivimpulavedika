@@ -99,7 +99,7 @@ const Navbar = () => {
             <span className="text-[18px] font-serif font-bold tracking-wide">
               Chadivimpula
             </span>
-            <span className="text-[11px] uppercase tracking-[0.25em] text-white/80">
+            <span className="text-[11px] uppercase tracking-[0.25em] font-semibold text-white/80">
               Vedika
             </span>
           </div>
