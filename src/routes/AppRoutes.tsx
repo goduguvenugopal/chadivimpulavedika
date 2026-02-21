@@ -1,23 +1,27 @@
 import { createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
 
 import RootRedirect from "./RootRedirect";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicOnlyRoute from "./PublicOnlyRoute";
 
-import Login from "../pages/user/Login";
-import Register from "../pages/user/Register";
-import StatusPage from "../pages/StatusPage";
-
+// Layouts (keep normal unless heavy)
 import UserLayout from "../layouts/UserLayout";
 import AdminLayout from "../layouts/AdminLayout";
 
-import Marriages from "../pages/admin/Marriages";
-import AdminProfile from "../pages/admin/AdminProfile";
-import Dashboard from "../pages/user/Dashboard";
-import UserProfile from "../pages/user/UserProfile";
-import Visitors from "../pages/user/Visitors";
-import AddVisitor from "../pages/user/AddVisitor";
-import Print from "../pages/user/Print";
+// 🔥 Lazy Loaded Pages
+const Login = lazy(() => import("../pages/user/Login"));
+const Register = lazy(() => import("../pages/user/Register"));
+const StatusPage = lazy(() => import("../pages/StatusPage"));
+
+const Dashboard = lazy(() => import("../pages/user/Dashboard"));
+const UserProfile = lazy(() => import("../pages/user/UserProfile"));
+const Visitors = lazy(() => import("../pages/user/Visitors"));
+const AddVisitor = lazy(() => import("../pages/user/AddVisitor"));
+const Print = lazy(() => import("../pages/user/Print"));
+
+const Marriages = lazy(() => import("../pages/admin/Marriages"));
+const AdminProfile = lazy(() => import("../pages/admin/AdminProfile"));
 
 export const router = createBrowserRouter([
   // ROOT
@@ -26,7 +30,7 @@ export const router = createBrowserRouter([
     element: <RootRedirect />,
   },
 
-  // PUBLIC ONLY (guest access only)
+  // PUBLIC ONLY
   {
     element: <PublicOnlyRoute />,
     children: [
@@ -64,7 +68,7 @@ export const router = createBrowserRouter([
           { path: "profile", element: <UserProfile /> },
           { path: "visitors", element: <Visitors /> },
           { path: "visitors/add", element: <AddVisitor /> },
-           { path: "print", element: <Print /> },
+          { path: "print", element: <Print /> },
         ],
       },
     ],
