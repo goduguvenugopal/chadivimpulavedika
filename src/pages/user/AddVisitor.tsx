@@ -16,10 +16,10 @@ const AddVisitor = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 p-5">
+    <div className="min-h-screen  flex items-center justify-center bg-[url('/bg-image.png')] bg-cover bg-center bg-no-repeat p-5">
       <div className="w-full max-w-lg lg:w-screen">
         {/* Breadcrumb */}
-        <div className="mb-6 text-sm text-gray-600 flex items-center gap-2 w-full lg:justify-start justify-center">
+        <div className="mb-6 text-sm text-gray-800 flex items-center gap-2 w-full lg:justify-start justify-center">
           <Link
             to="/dashboard"
             className="flex items-center gap-1 hover:text-rose-500 transition"
@@ -28,7 +28,7 @@ const AddVisitor = () => {
             Dashboard
           </Link>
           <span>/</span>
-          <span className="text-gray-800 font-medium">Add Visitor</span>
+          <span className="text-blue-800 font-medium">Add Visitor</span>
         </div>
 
         {/* Telugu Heading */}
@@ -36,7 +36,7 @@ const AddVisitor = () => {
           <h1 className="text-xl font-bold text-gray-800 mb-2">
             మీ చదివింపులు నమోదు చేయండి
           </h1>
-          <p className="text-gray-500">
+          <p className="text-gray-700">
             మీ ఆశీస్సులు మరియు బహుమతులను నమోదు చేయండి
           </p>
         </div>

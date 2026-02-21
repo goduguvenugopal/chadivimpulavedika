@@ -69,7 +69,7 @@ const VisitorForm = ({
     }
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formData.paymentMode === "UPI") {
@@ -79,9 +79,19 @@ const VisitorForm = ({
 
     try {
       setLoading(true);
+
       await onSubmit(formData);
-      // ✅ RESET FORM
+
+      toast.success("Visitor added successfully");
+
       setFormData(initialFormState);
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.error?.message ||
+        error?.message ||
+        "Visitor adding failed";
+
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -90,10 +100,20 @@ const VisitorForm = ({
   const confirmUpiPayment = async () => {
     try {
       setLoading(true);
+
       await onSubmit({ ...formData, paymentMode: "UPI" });
+
+      toast.success("Visitor Added Successfully");
+
       setShowUpiModal(false);
-      // ✅ RESET FORM
       setFormData(initialFormState);
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.error?.message ||
+        error?.message ||
+        "Visitor added failed";
+
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -112,7 +132,7 @@ const VisitorForm = ({
             required
             value={formData.visitorName}
             onChange={handleChange}
-            className="peer w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition"
+            className="peer w-full border border-gray-400 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition"
             placeholder="Visitor Name"
           />
           <label
@@ -134,7 +154,7 @@ const VisitorForm = ({
             required
             value={formData.amount}
             onChange={handleChange}
-            className="peer w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition"
+            className="peer w-full border border-gray-400 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition"
             placeholder="Amount"
           />
           <label
@@ -154,7 +174,7 @@ const VisitorForm = ({
             required
             value={formData.address}
             onChange={handleChange}
-            className="peer w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition"
+            className="peer w-full border border-gray-400 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition"
             placeholder="Address"
           />
           <label
@@ -174,7 +194,7 @@ const VisitorForm = ({
             rows={3}
             value={formData.notes}
             onChange={handleChange}
-            className="peer w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition resize-none"
+            className="peer w-full border border-gray-400 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition resize-none"
             placeholder="Notes"
           />
           <label
@@ -188,7 +208,7 @@ const VisitorForm = ({
         </div>
 
         {/* Gift Given */}
-        <div className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-xl border border-gray-200">
+        <div className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-xl border border-gray-400">
           <span className="text-gray-700 font-medium">Gift Given</span>
           <input
             type="checkbox"
@@ -206,7 +226,7 @@ const VisitorForm = ({
             required
             value={formData.paymentMode}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition bg-white"
+            className="w-full border border-gray-400 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition bg-white"
           >
             <option value="">Select Payment Mode</option>
             <option value="CASH">Cash</option>

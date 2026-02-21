@@ -6,14 +6,9 @@ import Loader from "../components/common/Loader";
 const RootRedirect = () => {
   const { user, loading } = useAuth();
 
- if (loading) {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-    <Loader/>
-    </div>
-  );
-}
-
+  if (loading) {
+    return <Loader />;
+  }
 
   return <Navigate to={getRedirectPath(user)} replace />;
 };

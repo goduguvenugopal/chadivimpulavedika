@@ -7,11 +7,7 @@ const PublicOnlyRoute = () => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-    <Loader/>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (user) {
