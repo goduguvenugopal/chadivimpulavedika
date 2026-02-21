@@ -4,18 +4,17 @@ import "react-toastify/dist/ReactToastify.css";
 const AppToastContainer = () => {
   return (
     <ToastContainer
-      position="top-right"
+      position="bottom-center"
       autoClose={3000}
-      limit={3}
+      limit={2}
       hideProgressBar
       newestOnTop
       closeOnClick
       pauseOnHover
-      draggable={false}
+      draggable={true}
       theme="colored"
       transition={Slide}
-      toastClassName="!rounded-xl !shadow-lg !text-sm"
-      bodyClassName="!px-4 !py-3"
+      toastClassName="rounded-lg shadow-md text-sm"
     />
   );
 };
