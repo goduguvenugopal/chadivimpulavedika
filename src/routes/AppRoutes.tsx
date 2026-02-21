@@ -17,6 +17,7 @@ import Dashboard from "../pages/user/Dashboard";
 import UserProfile from "../pages/user/UserProfile";
 import Visitors from "../pages/user/Visitors";
 import AddVisitor from "../pages/user/AddVisitor";
+import Print from "../pages/user/Print";
 
 export const router = createBrowserRouter([
   // ROOT
@@ -63,6 +64,7 @@ export const router = createBrowserRouter([
           { path: "profile", element: <UserProfile /> },
           { path: "visitors", element: <Visitors /> },
           { path: "visitors/add", element: <AddVisitor /> },
+           { path: "print", element: <Print /> },
         ],
       },
     ],

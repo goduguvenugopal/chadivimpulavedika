@@ -9,6 +9,7 @@ import {
 } from "react-icons/md";
 import { FaPrint } from "react-icons/fa";
 import { useAuth } from "../../context/AuthProvider";
+import ConfirmModal from "../modals/ConfirmModal";
 
 interface NavItem {
   label: string;
@@ -22,6 +23,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const isApproved = user?.permissions === "approved";
 
@@ -168,7 +170,7 @@ const Navbar = () => {
         {user && (
           <div className="px-4 pb-6 border-t pt-4">
             <button
-              onClick={handleLogout}
+              onClick={() => setShowLogoutModal(true)}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 text-sm font-medium"
             >
               <FiLogOut size={16} />
@@ -177,6 +179,20 @@ const Navbar = () => {
           </div>
         )}
       </div>
+
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        title="Logout"
+        message="Are you sure you want to logout from your account?"
+        confirmText="Logout"
+        cancelText="Cancel"
+        danger
+        onCancel={() => setShowLogoutModal(false)}
+        onConfirm={() => {
+          setShowLogoutModal(false);
+          handleLogout();
+        }}
+      />
     </>
   );
 };
