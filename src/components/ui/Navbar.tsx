@@ -93,9 +93,10 @@ const Navbar = () => {
           onClick={() => navigate("/")}
           className="flex items-center gap-3 cursor-pointer"
         >
-          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
+          {/* <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
             <MdFavorite size={20} className="text-white" />
-          </div>
+            <img src="/company_logo.png" className="w-10 h-10 rounded-full" alt="logo" />
+          </div> */}
 
           <div className="flex flex-col leading-tight">
             <span className="text-[18px] font-serif font-bold tracking-wide">
