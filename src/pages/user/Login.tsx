@@ -58,9 +58,7 @@ const Login = () => {
       className="min-h-screen flex items-center justify-center px-4 
                  bg-[url('/bg-image.png')] bg-cover bg-center bg-no-repeat"
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/30"></div>
-
+ 
       <div className="relative max-w-md w-full bg-white p-8 rounded-2xl shadow-xl">
         <h2 className="text-2xl font-bold text-center mb-6">Welcome Back</h2>
 
