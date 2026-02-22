@@ -8,7 +8,7 @@ const AdminLayout = () => {
       <Navbar />
 
       {/* Page Content */}
-      <main className="bg-[url('/bg-image.png')] bg-cover bg-center bg-no-repeat">
+      <main className="">
         <Outlet />
       </main>
     </div>
