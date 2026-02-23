@@ -1,3 +1,22 @@
-html::-webkit-scrollbar{
-    display: none;
-} 
+html::-webkit-scrollbar {
+  display: none;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+
+  button {
+    display: none !important;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  th,
+  td {
+    padding: 6px !important;
+  }
+}

@@ -18,7 +18,7 @@ const Dashboard = lazy(() => import("../pages/user/Dashboard"));
 const UserProfile = lazy(() => import("../pages/user/UserProfile"));
 const Visitors = lazy(() => import("../pages/user/Visitors"));
 const AddVisitor = lazy(() => import("../pages/user/AddVisitor"));
-const Print = lazy(() => import("../pages/user/Print"));
+const PrintVisitorsPage = lazy(() => import("../pages/user/PrintVisitorsPage"));
 
 const Marriages = lazy(() => import("../pages/admin/Marriages"));
 const AdminProfile = lazy(() => import("../pages/admin/AdminProfile"));
@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
           { path: "profile", element: <UserProfile /> },
           { path: "visitors", element: <Visitors /> },
           { path: "visitors/add", element: <AddVisitor /> },
-          { path: "print", element: <Print /> },
+          { path: "print", element: <PrintVisitorsPage/> },
         ],
       },
     ],
