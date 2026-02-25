@@ -7,17 +7,23 @@ import MarriageForm from "../../components/forms/MarriageForm";
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState({
     marriageName: "",
     marriageDate: "",
     location: "",
     adminMobileNumber: "",
+    password: "",
     upiId: "",
     upiPayeeName: "",
   });
 
-  const mobileRegex = /^[1-9]\d{9}$/;
+  const mobileRegex = /^[6-9]\d{9}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const upiRegex =
+    /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,13 +36,26 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!mobileRegex.test(form.adminMobileNumber)) {
-      toast.error("Mobile number must be exactly 10 digits");
+      toast.error("Enter valid 10-digit Indian mobile number");
       return;
     }
+
+    if (!passwordRegex.test(form.password)) {
+      toast.error(
+        "Password must be 8+ chars with uppercase, lowercase, number & special character"
+      );
+      return;
+    }
+
+    if (!upiRegex.test(form.upiId)) {
+      toast.error("Enter valid UPI ID (example@bank)");
+      return;
+    }
+
     try {
       setLoading(true);
       await registerApi(form);
@@ -71,6 +90,8 @@ const Register = () => {
           onSubmit={handleSubmit}
           loading={loading}
           buttonText="Submit Registration"
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
         />
 
         <p className="text-center text-sm text-gray-500 mt-8">

@@ -1,27 +1,26 @@
-
 import ButtonLoader from "../common/ButtonLoader";
 import InputField from "../ui/InputField";
-
-
-
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 interface MarriageFormData {
   marriageName: string;
   marriageDate: string;
   location: string;
   adminMobileNumber: string;
+  password: string;
   upiId: string;
   upiPayeeName: string;
 }
 
- interface Props {
+interface Props {
   form: MarriageFormData;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   loading: boolean;
   buttonText: string;
+  showPassword: boolean;
+  setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 
 const MarriageForm = ({
   form,
@@ -29,9 +28,12 @@ const MarriageForm = ({
   onSubmit,
   loading,
   buttonText,
+  showPassword,
+  setShowPassword,
 }: Props) => {
   return (
     <form onSubmit={onSubmit} className="grid md:grid-cols-2 gap-5">
+
       <InputField
         label="Marriage Name"
         name="marriageName"
@@ -65,6 +67,30 @@ const MarriageForm = ({
         maxLength={10}
         inputMode="numeric"
       />
+
+      {/* 🔐 Password Field */}
+      <div className="relative md:col-span-2">
+        <label className="block text-sm font-medium mb-1">
+          Password
+        </label>
+
+        <input
+          type={showPassword ? "text" : "password"}
+          name="password"
+          placeholder="Create strong password"
+          value={form.password}
+          onChange={onChange}
+          className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-400 pr-10"
+        />
+
+        <button
+          type="button"
+          onClick={() => setShowPassword((prev) => !prev)}
+          className="absolute right-3 top-[38px] text-gray-500"
+        >
+          {showPassword ? <FiEyeOff /> : <FiEye />}
+        </button>
+      </div>
 
       <InputField
         label="UPI ID"

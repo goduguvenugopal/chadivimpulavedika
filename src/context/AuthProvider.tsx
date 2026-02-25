@@ -24,7 +24,7 @@ interface AuthUser {
 interface AuthContextType {
   user: AuthUser | null;
   loading: boolean;
-  login: (mobile: string) => Promise<void>;
+  login: (mobile: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -54,9 +54,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchMe();
   }, []);
 
-  const login = async (mobile: string) => {
+  const login = async (mobile: string, password: string) => {
     try {
-      await loginApi({ adminMobileNumber: mobile });
+      await loginApi({ adminMobileNumber: mobile, password: password });
       await fetchMe();
 
       toast.success("Login successful");

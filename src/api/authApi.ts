@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-export const loginApi = (data: { adminMobileNumber: string }) =>
+export const loginApi = (data: { adminMobileNumber: string , password : string}) =>
   axiosInstance.post("/api/marriages/login", data);
 
 export const registerApi = (data: any) =>
