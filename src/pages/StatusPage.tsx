@@ -19,6 +19,7 @@ const StatusPage = () => {
       navigate("/login", { replace: true });
     }
 
+    // Only approved users go to dashboard
     if (!loading && user?.permissions === "approved") {
       navigate("/dashboard", { replace: true });
     }
@@ -27,22 +28,9 @@ const StatusPage = () => {
   if (loading) return <Loader />;
   if (!user) return null;
 
-  const expiryDate = user.subscriptionExpiresAt
-    ? new Date(user.subscriptionExpiresAt)
-    : null;
-
-  const now = new Date();
-
-  const isExpired =
-    expiryDate && now > expiryDate;
-
-  const daysLeft =
-    expiryDate && !isExpired
-      ? Math.ceil(
-          (expiryDate.getTime() - now.getTime()) /
-            (1000 * 60 * 60 * 24)
-        )
-      : 0;
+  const isPending = user.permissions === "pending";
+  const isRejected = user.permissions === "rejected";
+  const isExpired = user.permissions === "expired";
 
   const upiLink = `upi://pay?pa=${upiId}&pn=Marriage Subscription&am=${amount}&cu=INR`;
 
@@ -50,41 +38,74 @@ const StatusPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 px-4">
       <div className="max-w-md w-full bg-white shadow-2xl rounded-3xl p-8 text-center">
 
-        {/* STATUS ICON */}
-        <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 bg-yellow-100">
-          <span className="text-3xl font-bold text-yellow-600">
-            {isExpired ? "⚠" : "⏳"}
-          </span>
-        </div>
+        {/* REJECTED UI */}
+        {isRejected && (
+          <>
+            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 bg-red-100">
+              <span className="text-3xl text-red-600">✖</span>
+            </div>
 
-        {/* TITLE */}
-        <h2 className="text-2xl font-semibold mb-3">
-          {isExpired ? "Subscription Expired" : "Subscription Details"}
-        </h2>
+            <h2 className="text-2xl font-semibold text-red-600 mb-3">
+              Registration Rejected
+            </h2>
 
-        {/* MESSAGE */}
-        {!isExpired ? (
-          <p className="text-gray-600 mb-6">
-            Your subscription is active for{" "}
-            <strong>{daysLeft} days</strong>.
-            After that it will expire.
-          </p>
-        ) : (
-          <p className="text-gray-600 mb-6">
-            Your subscription has expired.
-            To continue using the system, purchase again.
-            Subscription Amount: ₹{amount}
-          </p>
+            <p className="text-gray-600 mb-6">
+              Your marriage registration was rejected.
+              Please contact support for clarification.
+            </p>
+          </>
         )}
 
-        {/* PAY NOW BUTTON */}
+        {/* PENDING UI (WITH PAY BUTTON) */}
+        {isPending && (
+          <>
+            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 bg-yellow-100">
+              <span className="text-3xl text-yellow-600">⏳</span>
+            </div>
+
+            <h2 className="text-2xl font-semibold text-yellow-600 mb-3">
+              Subscription Pending
+            </h2>
+
+            <p className="text-gray-600 mb-6">
+              Your subscription request is under review.
+              To activate your account faster, complete payment below.
+              Subscription Amount: ₹{amount}
+            </p>
+
+            <a
+              href={upiLink}
+              className="block w-full bg-green-600 text-white py-3 rounded-xl mb-6 hover:bg-green-700 transition"
+            >
+              Pay ₹{amount} Now
+            </a>
+          </>
+        )}
+
+        {/* EXPIRED UI */}
         {isExpired && (
-          <a
-            href={upiLink}
-            className="block w-full bg-green-600 text-white py-3 rounded-xl mb-6 hover:bg-green-700 transition"
-          >
-            Pay ₹{amount} Now
-          </a>
+          <>
+            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 bg-red-100">
+              <span className="text-3xl text-red-600">⚠</span>
+            </div>
+
+            <h2 className="text-2xl font-semibold text-red-600 mb-3">
+              Subscription Expired
+            </h2>
+
+            <p className="text-gray-600 mb-6">
+              Your subscription has expired.
+              Renew now to continue using the system.
+              Subscription Amount: ₹{amount}
+            </p>
+
+            <a
+              href={upiLink}
+              className="block w-full bg-green-600 text-white py-3 rounded-xl mb-6 hover:bg-green-700 transition"
+            >
+              Renew for ₹{amount}
+            </a>
+          </>
         )}
 
         {/* CONTACT SUPPORT */}
