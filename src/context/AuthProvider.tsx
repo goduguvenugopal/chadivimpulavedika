@@ -12,6 +12,8 @@ interface AuthUser {
   role: string;
   permissions: string;
   marriageName: string;
+  subscriptionExpiresAt: Date;
+  status: "active" | "inactive";
   adminMobileNumber: string;
   location: string;
   marriageDate: string;
