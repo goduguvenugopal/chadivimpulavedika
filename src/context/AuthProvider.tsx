@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(null);
 
       if (error?.response?.status !== 401) {
-        toast.error("Failed to fetch user session");
+        toast.error("Failed to fetch Marriage");
       }
     } finally {
       setLoading(false);
