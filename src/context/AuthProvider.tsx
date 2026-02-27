@@ -58,7 +58,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (mobile: string, password: string) => {
     try {
-      await loginApi({ adminMobileNumber: mobile, password: password });
+      const res: any = await loginApi({
+        adminMobileNumber: mobile,
+        password: password,
+      });
+      setUser(res.data?.data);
       await fetchMe();
 
       toast.success("Login successful");
