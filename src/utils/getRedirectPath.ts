@@ -13,7 +13,7 @@ export const getRedirectPath = (user: User | null): string => {
     if (role === "user") return "/dashboard";
   }
 
-  if (["pending", "rejected"].includes(permissions)) {
+  if (["pending", "rejected" , "expired"].includes(permissions)) {
     return "/status";
   }
 
