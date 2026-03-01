@@ -9,10 +9,10 @@ const StatusPage = () => {
   const navigate = useNavigate();
 
   const supportEmail = env.SUPPORT_EMAIL;
-  const supportPhone = env.SUPPORT_PHONE;
+  // const supportPhone = env.SUPPORT_PHONE;
 
   const upiId = env.SUBSCRIPTION_UPI_ID;
-  const amount = env.SUBSCRIPTION_AMOUNT || 1000;
+  const amount = env.SUBSCRIPTION_AMOUNT || 500;
 
   useEffect(() => {
     if (!loading && !user) {
@@ -124,15 +124,15 @@ const StatusPage = () => {
             </a>
           </p>
 
-          <p className="text-sm">
-            📞{" "}
+          {/* <p className="text-sm">
+            {" "}
             <a
               href={`tel:${supportPhone}`}
               className="text-rose-600 hover:underline"
             >
               {supportPhone}
             </a>
-          </p>
+          </p> */}
         </div>
 
         <button
