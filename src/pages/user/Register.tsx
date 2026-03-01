@@ -74,7 +74,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[url('/bg-image.png')] bg-cover bg-center bg-no-repeat flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-[url('/bg-image.png')] bg-cover bg-center bg-no-repeat flex items-center justify-center px-4 py-10 select-none">
       <div className="w-full max-w-2xl bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 border border-white/40">
         <h2 className="text-3xl font-bold text-center text-rose-600 mb-2">
           Create Marriage Account 💍

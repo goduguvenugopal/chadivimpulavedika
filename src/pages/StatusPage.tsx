@@ -35,7 +35,7 @@ const StatusPage = () => {
   const upiLink = `upi://pay?pa=${upiId}&pn=Marriage Subscription&am=${amount}&cu=INR`;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 px-4 select-none">
       <div className="max-w-md w-full bg-white shadow-2xl rounded-3xl p-8 text-center">
 
         {/* REJECTED UI */}
@@ -133,6 +133,7 @@ const StatusPage = () => {
               {supportPhone}
             </a>
           </p> */}
+          
         </div>
 
         <button

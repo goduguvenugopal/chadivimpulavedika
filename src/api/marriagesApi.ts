@@ -7,3 +7,6 @@ export const updateMarriageAccessApi = (marriageId: string, data: any) =>
 
 export const deleteMarriageApi = (marriageId: string) =>
   axiosInstance.delete(`/api/marriages/delete/${marriageId}`);
+ 
+export const updateMyMarriageApi = (data: any) =>
+  axiosInstance.put(`/api/marriages/me/update`, data);

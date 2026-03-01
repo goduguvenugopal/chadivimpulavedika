@@ -66,7 +66,7 @@ const Login = () => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 
+      className="min-h-screen flex items-center justify-center px-4 select-none
                  bg-[url('/bg-image.png')] bg-cover bg-center bg-no-repeat"
     >
       <div className="relative max-w-md w-full bg-white p-8 rounded-2xl shadow-xl">
