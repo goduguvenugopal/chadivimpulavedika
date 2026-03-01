@@ -15,6 +15,7 @@ import ConfirmModal from "../../components/modals/ConfirmModal";
 import VisitorForm from "../../components/forms/VisitorForm";
 import { useAuth } from "../../context/AuthProvider";
 import { Navigate } from "react-router-dom";
+import { formatINR } from "../../utils/format";
 
 interface Visitor {
   _id: string;
@@ -204,7 +205,7 @@ const Visitors = () => {
                         <span className="font-medium text-gray-700">
                           Amount:
                         </span>{" "}
-                        ₹ {visitor.amount.toLocaleString()}
+                        {formatINR(visitor.amount)}
                       </p>
 
                       <p className="flex items-center gap-2">

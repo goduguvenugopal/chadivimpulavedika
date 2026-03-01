@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getDashboardStatsApi } from "../../api/dashboardApi";
 import Loader from "../../components/common/Loader";
+import { formatINR } from "../../utils/format";
 
 interface Stats {
   totalAmount: number;
@@ -54,25 +55,16 @@ const Dashboard = () => {
 
       {/* Stats Grid */}
       <div className="grid md:grid-cols-3 gap-6">
-        <StatCard
-          title="Total Amount"
-          value={`₹ ${(stats.totalAmount ?? 0).toLocaleString()}`}
-        />
-
+        <StatCard title="Total Amount" value={formatINR(stats.totalAmount)} />
         <StatCard
           title="Cash Amount"
-          value={`₹ ${(stats.totalCashAmount ?? 0).toLocaleString()}`}
+          value={formatINR(stats.totalCashAmount)}
         />
-
-        <StatCard
-          title="UPI Amount"
-          value={`₹ ${(stats.totalUpiAmount ?? 0).toLocaleString()}`}
-        />
-
+        <StatCard title="UPI Amount" value={formatINR(stats.totalUpiAmount)} />
         <StatCard title="Total Visitors" value={stats.totalVisitors ?? 0} />
-
         <StatCard title="Gifts Given" value={stats.totalGifts ?? 0} />
       </div>
+      
     </div>
   );
 };

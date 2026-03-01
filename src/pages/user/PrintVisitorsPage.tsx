@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getPrintVisitorsApi } from "../../api/visitorApi";
 import Loader from "../../components/common/Loader";
 import { useAuth } from "../../context/AuthProvider";
+import { formatINR } from "../../utils/format";
 
 interface Visitor {
   _id: string;
@@ -53,7 +54,7 @@ const PrintVisitorsPage = () => {
       {/* Header */}
       {/* Marriage Name Centered */}
       <div className="flex justify-center mb-4 mt-6">
-        <div className="text-3xl font-bold uppercase border-b-2 border-gray-400 pb-2">
+        <div className="text-2xl font-bold uppercase border-b-2 border-gray-400 pb-2">
           {user?.marriageName}
         </div>
       </div>
@@ -72,7 +73,7 @@ const PrintVisitorsPage = () => {
           Total Visitors: {totalVisitors}
         </h2>
         <h2 className="text-lg font-semibold">
-          Total Amount: ₹ {totalAmount.toLocaleString()}
+          Total Amount: {formatINR(totalAmount)}
         </h2>
       </div>
       {/* Table */}
@@ -96,7 +97,7 @@ const PrintVisitorsPage = () => {
                 <td className="border p-2 text-center">{index + 1}</td>
                 <td className="border p-2">{visitor.visitorName}</td>
                 <td className="border p-2 text-right">
-                  ₹ {visitor.amount.toLocaleString()}
+                  {formatINR(visitor.amount)}
                 </td>
                 <td className="border p-2 text-center">
                   {visitor.paymentMode}
