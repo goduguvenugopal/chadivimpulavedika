@@ -35,116 +35,139 @@ const StatusPage = () => {
   const upiLink = `upi://pay?pa=${upiId}&pn=Marriage Subscription&am=${amount}&cu=INR`;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 px-4 select-none">
-      <div className="max-w-md w-full bg-white shadow-2xl rounded-3xl p-8 text-center">
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 py-4 select-none">
+    <div className="max-w-lg w-full bg-white shadow-2xl rounded-3xl p-8">
 
-        {/* REJECTED UI */}
-        {isRejected && (
+      {/* STATUS CONFIG */}
+      {(() => {
+        let icon = "⏳";
+        let title = "";
+        let titleColor = "text-yellow-600";
+        let iconBg = "bg-yellow-100";
+        let description = "";
+
+        if (isRejected) {
+          icon = "✖";
+          title = "Registration Rejected";
+          titleColor = "text-red-600";
+          iconBg = "bg-red-100";
+          description =
+            "Your marriage registration has been rejected by the administrator. Please contact support for clarification.";
+        }
+
+        if (isPending) {
+          title = "Subscription Pending Activation";
+          description =
+            `Your account is awaiting subscription activation. 
+            Complete the payment of ₹${amount} to activate your subscription immediately.`;
+        }
+
+        if (isExpired) {
+          icon = "⚠";
+          title = "Subscription Expired";
+          titleColor = "text-red-600";
+          iconBg = "bg-red-100";
+          description =
+            `Your subscription period has ended. Renew your subscription to regain full access to the system.`;
+        }
+
+        return (
           <>
-            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 bg-red-100">
-              <span className="text-3xl text-red-600">✖</span>
+            {/* ICON */}
+            <div className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 ${iconBg}`}>
+              <span className="text-3xl">{icon}</span>
             </div>
 
-            <h2 className="text-2xl font-semibold text-red-600 mb-3">
-              Registration Rejected
+            {/* TITLE */}
+            <h2 className={`text-2xl font-semibold text-center mb-3 ${titleColor}`}>
+              {title}
             </h2>
 
-            <p className="text-gray-600 mb-6">
-              Your marriage registration was rejected.
-              Please contact support for clarification.
-            </p>
-          </>
-        )}
-
-        {/* PENDING UI (WITH PAY BUTTON) */}
-        {isPending && (
-          <>
-            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 bg-yellow-100">
-              <span className="text-3xl text-yellow-600">⏳</span>
-            </div>
-
-            <h2 className="text-2xl font-semibold text-yellow-600 mb-3">
-              Subscription Pending
-            </h2>
-
-            <p className="text-gray-600 mb-6">
-              Your subscription request is under review.
-              To activate your account faster, complete payment below.
-              Subscription Amount: ₹{amount}
+            {/* DESCRIPTION */}
+            <p className="text-gray-600 text-center mb-6 whitespace-pre-line">
+              {description}
             </p>
 
-            <a
-              href={upiLink}
-              className="block w-full bg-green-600 text-white py-3 rounded-xl mb-6 hover:bg-green-700 transition"
-            >
-              Pay ₹{amount} Now
-            </a>
+            {/* SUBSCRIPTION DETAILS (Only for Pending & Expired) */}
+            {(isPending || isExpired) && (
+              <div className="bg-gray-50 border rounded-2xl p-5 mb-6 space-y-3 text-sm text-gray-700">
+                <h4 className="font-semibold text-gray-800 text-center text-base">
+                  Subscription Details
+                </h4>
+
+                <p>
+                  • Subscription Validity:
+                  <span className="font-medium"> 3 Days</span>
+                </p>
+
+                <p>
+                  • Subscription Amount:
+                  <span className="font-medium"> ₹{amount}</span>
+                </p>
+
+                <p>• Full Dashboard Access during active subscription</p>
+                <p>• Add / Edit / Delete Marriage Visitors</p>
+                <p>• Generate Reports & Download PDF</p>
+                <p>• UPI QR Payment Support</p>
+
+                <p>
+                  • Data Retention Policy:
+                  <span className="font-medium">
+                    {" "}Marriage data will be securely stored for 30 Days (1 Month) after subscription expiry.
+                  </span>
+                </p>
+
+                <p className="text-red-500 text-xs mt-2">
+                  After 30 days from expiry, all associated marriage data will be permanently removed from the system.
+                </p>
+              </div>
+            )}
+
+            {/* PAYMENT BUTTON */}
+            {(isPending || isExpired) && (
+              <a
+                href={upiLink}
+                className="block w-full bg-green-600 text-white text-center py-3 rounded-xl mb-6 hover:bg-green-700 transition font-medium"
+              >
+                {isExpired ? `Renew for ₹${amount}` : `Pay ₹${amount} Now`}
+              </a>
+            )}
           </>
-        )}
+        );
+      })()}
 
-        {/* EXPIRED UI */}
-        {isExpired && (
-          <>
-            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 bg-red-100">
-              <span className="text-3xl text-red-600">⚠</span>
-            </div>
+      {/* SUPPORT SECTION */}
+      <div className="bg-rose-50 border rounded-xl p-4 mb-6 text-sm">
+        <h4 className="font-semibold text-rose-600 mb-2 text-center">
+          Support & Assistance
+        </h4>
 
-            <h2 className="text-2xl font-semibold text-red-600 mb-3">
-              Subscription Expired
-            </h2>
+        <p className="text-gray-700">
+          For payment confirmation or account approval, contact:
+        </p>
 
-            <p className="text-gray-600 mb-6">
-              Your subscription has expired.
-              Renew now to continue using the system.
-              Subscription Amount: ₹{amount}
-            </p>
-
-            <a
-              href={upiLink}
-              className="block w-full bg-green-600 text-white py-3 rounded-xl mb-6 hover:bg-green-700 transition"
-            >
-              Renew for ₹{amount}
-            </a>
-          </>
-        )}
-
-        {/* CONTACT SUPPORT */}
-        <div className="bg-rose-50 border rounded-xl p-4 mb-6 text-left">
-          <h4 className="font-semibold text-rose-600 mb-2 text-center">
-            Contact Support
-          </h4>
-
-          <p className="text-sm">
-            📧{" "}
-            <a
-              href={`mailto:${supportEmail}`}
-              className="text-rose-600 hover:underline"
-            >
-              {supportEmail}
-            </a>
-          </p>
-
-          {/* <p className="text-sm">
-            {" "}
-            <a
-              href={`tel:${supportPhone}`}
-              className="text-rose-600 hover:underline"
-            >
-              {supportPhone}
-            </a>
-          </p> */}
-          
-        </div>
-
-        <button
-          onClick={logout}
-          className="w-full bg-gray-800 text-white py-2.5 rounded-xl hover:bg-gray-900 transition"
-        >
-          Logout
-        </button>
+        <p className="mt-2">
+          📧{" "}
+          <a
+            href={`mailto:${supportEmail}`}
+            className="text-rose-600 hover:underline"
+          >
+            {supportEmail}
+          </a>
+        </p>
       </div>
+
+      {/* LOGOUT */}
+      <button
+        onClick={logout}
+        className="w-full bg-gray-800 text-white py-2.5 rounded-xl hover:bg-gray-900 transition"
+      >
+        Logout
+      </button>
+
     </div>
-  );
+  </div>
+);
 };
 
 export default StatusPage;
