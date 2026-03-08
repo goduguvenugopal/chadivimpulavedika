@@ -6,6 +6,8 @@ import ButtonLoader from "../../components/common/ButtonLoader";
 import { getRedirectPath } from "../../utils/getRedirectPath";
 import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FaYoutube } from "react-icons/fa";
+import env from "../../config/env";
 
 const Login = () => {
   const { login, user, loading: authLoading } = useAuth();
@@ -39,7 +41,7 @@ const Login = () => {
 
     if (!passwordRegex.test(password)) {
       setError(
-        "Password must be 8+ chars with uppercase, lowercase, number & special character"
+        "Password must be 8+ chars with uppercase, lowercase, number & special character",
       );
       return;
     }
@@ -73,16 +75,13 @@ const Login = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Welcome Back</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           {/* Mobile Input */}
           <input
             type="text"
             inputMode="numeric"
             maxLength={10}
             value={mobile}
-            onChange={(e) =>
-              setMobile(e.target.value.replace(/\D/g, ""))
-            }
+            onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
             placeholder="Enter 10-digit mobile number"
             className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-400"
           />
@@ -106,9 +105,7 @@ const Login = () => {
             </button>
           </div>
 
-          {error && (
-            <p className="text-red-500 text-sm">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button
             type="submit"
@@ -119,7 +116,22 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-center text-sm mt-6">
+        <p className="text-center text-[14px] mt-6 text-gray-600">
+          New user? See how{" "}
+          <span className="font-medium">Chadivimpulu Digital System</span>{" "}
+          works.{" "}
+          <a
+            href={env.YOUTUBE_VIDEO}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-red-600 font-medium hover:underline"
+          >
+            <FaYoutube />
+            Watch Video
+          </a>
+        </p>
+
+        <p className="text-center text-sm mt-2">
           Don’t have an account?{" "}
           <Link
             to="/register"
