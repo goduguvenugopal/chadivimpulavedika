@@ -164,7 +164,7 @@ const StatusPage = () => {
               {supportEmail}
             </a>
           </p>
-
+          
           <p className="mt-2 flex items-center gap-2">
             <FaWhatsapp className="text-green-500" />
             <a
