@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Loader from "../components/common/Loader";
 import env from "../config/env";
-import { FaEnvelope, FaPhone, FaWhatsapp } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 const StatusPage = () => {
   const { user, logout, loading } = useAuth();
@@ -120,6 +120,17 @@ const StatusPage = () => {
                       Month) after subscription expiry.
                     </span>
                   </p>
+                  <p>
+                    <a
+                      href={env.YOUTUBE_VIDEO}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-red-600 font-medium hover:underline"
+                    >
+                      <FaYoutube />
+                      Watch Video
+                    </a>
+                  </p>
 
                   <p className="text-red-500 text-xs mt-2">
                     After 30 days from expiry, all associated marriage data will
@@ -164,7 +175,7 @@ const StatusPage = () => {
               {supportEmail}
             </a>
           </p>
-          
+
           <p className="mt-2 flex items-center gap-2">
             <FaWhatsapp className="text-green-500" />
             <a
