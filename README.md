@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+Digital Chadivimpulu Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Digital Marriage Gift Management System designed to replace the traditional notebook-based Chadivimpulu system used in Telugu weddings.
 
-Currently, two official plugins are available:
+This platform helps families and operators manage visitor entries, gifts, cash contributions, and UPI payments digitally with real-time tracking and organized records.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The system improves accuracy, speeds up visitor entry, and allows easy generation of printable reports after the marriage event.
 
-## React Compiler
+Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Fast visitor entry system
 
-## Expanding the ESLint configuration
+Track Cash, UPI payments, and Gifts separately
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Live dashboard showing total collections
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Search visitors by Name or Address
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Generate printable PDF reports
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+UPI QR code support
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Multiple user login support
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Secure authentication system
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Simple and fast UI
+
+Tech Stack
+Frontend
+
+React
+
+TypeScript
+
+Tailwind CSS
+
+Backend
+
+Node.js
+
+Express.js
+
+TypeScript
+
+Database
+
+MongoDB
+
+Deployment
+
+Vercel (Frontend)
+
+Railway / Cloud Backend Hosting
+
+System Modules
+Authentication
+
+Secure login system
+
+Role-based access
+
+Visitor Management
+
+Add visitor details
+
+Record gifts, cash, and UPI payments
+
+Edit and update entries
+
+Dashboard
+
+Total visitors
+
+Total gifts
+
+Cash & UPI statistics
+
+Real-time summary
+
+Reports
+
+Generate PDF reports
+
+Printable marriage gift records
