@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { registerApi } from "../../api/authApi";
 import { toast } from "react-toastify";
 import MarriageForm from "../../components/forms/MarriageForm";
+import emailjs from "@emailjs/browser";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -22,8 +23,7 @@ const Register = () => {
   const mobileRegex = /^[6-9]\d{9}$/;
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  const upiRegex =
-    /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+  const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -46,7 +46,7 @@ const Register = () => {
 
     if (!passwordRegex.test(form.password)) {
       toast.error(
-        "Password must be 8+ chars with uppercase, lowercase, number & special character"
+        "Password must be 8+ chars with uppercase, lowercase, number & special character",
       );
       return;
     }
@@ -56,9 +56,29 @@ const Register = () => {
       return;
     }
 
+    const serviceID = "service_2xtog3p";
+    const templateID = "template_rwq1e4h";
+    const publicKey = "KqiR9Hwh-Gyan-y1P";
+
+    const emailData = {
+      subject: "New Marriage Registration 💍",
+      message: `
+        Marriage Name: ${form.marriageName}
+        Marriage Date: ${form.marriageDate}
+        Location: ${form.location}
+        Admin Mobile Number: ${form.adminMobileNumber}
+        UPI ID: ${form.upiId}
+        UPI Payee Name: ${form.upiPayeeName}
+
+        Registered At: ${new Date().toLocaleDateString("en-GB")}
+          `,
+    };
+
     try {
       setLoading(true);
+
       await registerApi(form);
+      await emailjs.send(serviceID, templateID, emailData, publicKey);
       toast.success("Registration submitted successfully 💐");
       navigate("/login");
     } catch (error: any) {
