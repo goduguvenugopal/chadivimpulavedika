@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import QRCode from "qrcode";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import allNames from "../../data/allNames";
 
 interface VisitorFormProps {
   initialData?: any; // for update
@@ -29,6 +30,7 @@ const VisitorForm = ({
   };
 
   const [formData, setFormData] = useState(initialFormState);
+  const [namesResults, setNamesResults] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [showUpiModal, setShowUpiModal] = useState(false);
@@ -49,17 +51,33 @@ const VisitorForm = ({
     QRCode.toDataURL(upiUrl).then(setQrCodeUrl);
   }, [showUpiModal, formData.amount, authUser]);
 
+  // Add this to your existing states
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
-
     const updatedValue = type === "checkbox" ? checked : value;
+
+    // Search Logic
+    if (name === "visitorName") {
+      if (value.length >= 1) {
+        const results: any = allNames
+          .filter((vname) => vname.toLowerCase().includes(value.toLowerCase()))
+          .slice(0, 50); // Limit to 50 for performance
+        setNamesResults(results);
+        setShowDropdown(true);
+      } else {
+        setNamesResults([]);
+        setShowDropdown(false);
+      }
+    }
 
     setFormData((prev) => ({
       ...prev,
       [name]: updatedValue,
     }));
 
-    // Open modal immediately when UPI selected
+    // UPI logic remains same...
     if (name === "paymentMode" && value === "UPI") {
       if (!formData.amount || Number(formData.amount) <= 0) {
         toast.info("Please enter amount before selecting UPI");
@@ -67,6 +85,13 @@ const VisitorForm = ({
       }
       setShowUpiModal(true);
     }
+  };
+
+  // Handle selecting a name from dropdown
+  const handleSelectName = (selectedName: string) => {
+    setFormData((prev) => ({ ...prev, visitorName: selectedName }));
+    setNamesResults([]);
+    setShowDropdown(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -142,23 +167,47 @@ const VisitorForm = ({
         className="space-y-6 bg-white/90 backdrop-blur p-8 rounded-2xl shadow-xl border border-gray-100"
       >
         {/* Visitor Name */}
-        <div className="relative">
+        {/* Visitor Name Input Container */}
+        <div className="relative group">
           <input
             name="visitorName"
             required
+            autoComplete="off"
             value={formData.visitorName}
             onChange={handleChange}
-            className="peer w-full border border-gray-400 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition"
+            onFocus={() =>
+              formData.visitorName.length > 0 && setShowDropdown(true)
+            }
+            className="peer w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-400 transition shadow-sm"
             placeholder="Visitor Name"
           />
-          <label
-            className="absolute left-4 top-2 text-sm text-gray-500 transition-all 
-      peer-placeholder-shown:top-4 peer-placeholder-shown:text-base 
-      peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm 
-      peer-focus:text-rose-500"
-          >
+          <label className="absolute left-4 top-2 text-sm text-gray-500 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-rose-500 font-medium">
             Visitor Name
           </label>
+
+          {/* Professional Dropdown */}
+          {showDropdown && namesResults.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden"
+            >
+              <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                {namesResults.map((vName, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleSelectName(vName)}
+                    className="px-4 py-3 hover:bg-rose-50 cursor-pointer text-gray-700 border-b border-gray-50 last:border-none flex items-center justify-between transition-colors"
+                  >
+                    <span className="font-medium">{vName}</span>
+                    <span className="text-xs text-gray-400 italic">
+                      Suggestion
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Amount */}
