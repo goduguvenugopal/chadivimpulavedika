@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getDashboardStatsApi } from "../../api/dashboardApi";
@@ -17,21 +17,26 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchStats = useCallback(async (isRefresh = false) => {
+    try {
+      if (isRefresh) setRefreshing(true);
+      else setLoading(true);
+
+      const data: any = await getDashboardStatsApi();
+      setStats(data.data.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const data: any = await getDashboardStatsApi();
-        setStats(data.data.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchStats();
-  }, []);
+  }, [fetchStats]);
 
   if (loading) {
     return <Loader />;
@@ -43,7 +48,35 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
+        <div className="flex items-center gap-3 flex-wrap">
+          <h1 className="text-3xl font-bold text-gray-800">
+            Dashboard Overview
+          </h1>
+
+          {/* Refresh Button */}
+          <button
+            onClick={() => fetchStats(true)}
+            disabled={refreshing}
+            title="Refresh data"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-rose-200 bg-white hover:bg-rose-50 text-rose-500 text-sm font-medium shadow-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`w-4 h-4 transition-transform duration-500 ${refreshing ? "animate-spin" : ""}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            {refreshing ? "Refreshing..." : "Refresh"}
+          </button>
+        </div>
 
         <button
           onClick={() => navigate("/dashboard/visitors/add")}
@@ -64,7 +97,6 @@ const Dashboard = () => {
         <StatCard title="Total Visitors" value={stats.totalVisitors ?? 0} />
         <StatCard title="Gifts Given" value={stats.totalGifts ?? 0} />
       </div>
-      
     </div>
   );
 };
